@@ -8,7 +8,8 @@ public record DadosAlterarUsuario(
     Long id,
     String nome,
     String cargo,
-    String senha
+    String senha,
+    Long idEmpresa
 ) {
 
 

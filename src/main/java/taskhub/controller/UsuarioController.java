@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import taskhub.domain.empresa.EmpresaRepository;
 import taskhub.domain.usuario.DadosAlterarUsuario;
 import taskhub.domain.usuario.DadosCadastroUsuario;
 import taskhub.domain.usuario.DadosListagemUsuario;
@@ -28,6 +28,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository repository;
+
+    @Autowired
+    private EmpresaRepository empresaRepository;
     
     @GetMapping
     @Transactional
@@ -54,6 +57,10 @@ public class UsuarioController {
     public ResponseEntity alterar(@RequestBody @Valid DadosAlterarUsuario dados){
         var usuario = repository.getReferenceById(dados.id());
         usuario.atualizarInformacao(dados);
+        if (dados.idEmpresa() != null){
+            var empresa = empresaRepository.getReferenceById(dados.idEmpresa());
+            usuario.atualizarEmpresa(empresa);
+        }
         return ResponseEntity.ok(new DadosListagemUsuario(usuario));
     }
     

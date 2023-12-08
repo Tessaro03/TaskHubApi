@@ -35,7 +35,7 @@ public class Usuario implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private String login;
     private String email;
     private String senha;
@@ -74,6 +74,10 @@ public class Usuario implements UserDetails{
         if (dados.senha() != null) {
             this.senha = dados.senha();
         }
+    }
+    
+    public void atualizarEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
     
     public void desatiivarConta() {
@@ -115,6 +119,7 @@ public class Usuario implements UserDetails{
         return true;
 
     }
+
 
 
 
