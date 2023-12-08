@@ -3,6 +3,8 @@ package taskhub.domain.empresa;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import taskhub.domain.usuario.Usuario;
+import taskhub.domain.usuario.UsuarioRepository;
 
 @Table(name = "empresas")
 @Entity(name = "Empresa")
@@ -27,6 +30,7 @@ import taskhub.domain.usuario.Usuario;
 @EqualsAndHashCode( of = "id")
 public class Empresa {
 
+    
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +48,13 @@ public class Empresa {
     public Empresa(DadosCadastroEmpresa dados, Usuario proprietario) {
         this.nome = dados.nome();
         this.proprietario = proprietario;
+    }
+    
+    public void atualizarInformacao(@Valid DadosAlterarEmpresa dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+       
     }
     
 }
