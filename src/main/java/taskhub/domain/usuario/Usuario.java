@@ -24,7 +24,7 @@ import lombok.ToString;
 import taskhub.domain.empresa.Empresa;
 
 @Table(name = "usuarios")
-@Entity(name = "Usuarios")
+@Entity(name = "Usuario")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -55,9 +55,31 @@ public class Usuario implements UserDetails{
         this.login = dados.login();
         this.ativo = true;
         
-
+        if (dados.cargo() == null) {
+            this.cargo = " ";
+        } else {
+            this.cargo = dados.cargo();
+        }
+        
+        
     }
     
+    public void atualizarInformacao(@Valid DadosAlterarUsuario dados) {
+        if (dados.cargo() != null) {
+            this.cargo = dados.cargo();
+        }
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.senha() != null) {
+            this.senha = dados.senha();
+        }
+    }
+    
+    public void desatiivarConta() {
+        this.ativo = false;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
@@ -93,6 +115,8 @@ public class Usuario implements UserDetails{
         return true;
 
     }
+
+
 
 
 }
