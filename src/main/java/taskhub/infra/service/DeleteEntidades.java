@@ -27,7 +27,6 @@ public class DeleteEntidades {
     public void deletarProjeto(Long idProjeto){
         membroRepository.deletarMembroIdProjeto(idProjeto);
         tarefaRepository.deletarTarefaIdProjeto(idProjeto);
-        equipeRepository.deletarEquipeIdProjeto(idProjeto);
         projetoRepository.deleteById(idProjeto);
     }
 
