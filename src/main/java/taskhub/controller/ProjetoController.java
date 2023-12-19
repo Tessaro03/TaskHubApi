@@ -76,8 +76,7 @@ public class ProjetoController {
     @PatchMapping
     @Transactional
     public ResponseEntity alterar(HttpServletRequest request, @RequestBody @Valid DadosAlterarProjeto dados){
-        var usuario = usuarioToken.usuarioToken(request);
-        validador.validarPatch(usuario, dados);
+        validador.validarPatch( usuarioToken.usuarioToken(request), dados);
         var projeto = repository.getReferenceById(dados.id());
         projeto.atualizarDados(dados);
         return ResponseEntity.ok(new DadosListagemProjeto(projeto));
@@ -86,7 +85,8 @@ public class ProjetoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deletar(@PathVariable Long id){
+    public ResponseEntity deletar(HttpServletRequest request, @PathVariable Long id){
+        validador.validarDelete(usuarioToken.usuarioToken(request), id);
         deleteEntidades.deletarProjeto(id);
         return ResponseEntity.noContent().build();
     }
