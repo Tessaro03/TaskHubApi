@@ -4,7 +4,7 @@ import taskhub.domain.usuario.Usuario;
 
 public interface ValidadorProjetoDelete {
     
-        void validar(Usuario usuario);
+        void validar(Usuario usuario, Long idProjeto);
 
 
 }
