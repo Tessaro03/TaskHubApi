@@ -6,14 +6,15 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import taskhub.domain.empresa.Empresa;
+import taskhub.domain.colaborador.Colaborador;
+import taskhub.domain.equipe.Equipe;
+import taskhub.domain.membro.Membro;
+
 
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
@@ -40,34 +44,26 @@ public class Usuario implements UserDetails{
     private String email;
     private String senha;
     private String nome;
-    private String cargo;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Equipe> equipes;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "empresa_id")
-    private Empresa empresa;
-    
-    private Boolean ativo;
-    
+    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Colaborador> colaboracao;
+
+    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Membro> membro;
+
     public Usuario(@Valid DadosCadastroUsuario dados) {
         this.nome = dados.nome();
         this.email = dados.email();
-        this.senha = dados.senha();
+        this.senha = new BCryptPasswordEncoder().encode(dados.senha());
         this.login = dados.login();
-        this.ativo = true;
-        
-        if (dados.cargo() == null) {
-            this.cargo = " ";
-        } else {
-            this.cargo = dados.cargo();
-        }
-        
         
     }
     
     public void atualizarInformacao(@Valid DadosAlterarUsuario dados) {
-        if (dados.cargo() != null) {
-            this.cargo = dados.cargo();
-        }
+        
         if (dados.nome() != null) {
             this.nome = dados.nome();
         }
@@ -76,14 +72,8 @@ public class Usuario implements UserDetails{
         }
     }
     
-    public void atualizarEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-    
-    public void desatiivarConta() {
-        this.ativo = false;
-    }
-
+  
+  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));

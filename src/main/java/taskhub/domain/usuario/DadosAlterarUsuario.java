@@ -7,9 +7,7 @@ public record DadosAlterarUsuario(
     @NotNull
     Long id,
     String nome,
-    String cargo,
-    String senha,
-    Long idEmpresa
+    String senha
 ) {
 
 

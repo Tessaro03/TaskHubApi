@@ -16,9 +16,8 @@ public record DadosCadastroUsuario(
     String email,
     
     @NotBlank
-    String senha,
+    String senha
 
-    String cargo
 
 ) {
 }  

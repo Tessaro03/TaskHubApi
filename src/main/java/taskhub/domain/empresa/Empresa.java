@@ -1,17 +1,13 @@
 package taskhub.domain.empresa;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
@@ -19,8 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import taskhub.domain.usuario.Usuario;
-import taskhub.domain.usuario.UsuarioRepository;
+import taskhub.domain.colaborador.Colaborador;
 
 @Table(name = "empresas")
 @Entity(name = "Empresa")
@@ -30,24 +25,17 @@ import taskhub.domain.usuario.UsuarioRepository;
 @EqualsAndHashCode( of = "id")
 public class Empresa {
 
-    
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String nome;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")
-    private Usuario proprietario;
+    @OneToMany( mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Colaborador> colaboradores;
     
-    @OneToMany(mappedBy = "empresa")
-    private List<Usuario> colaboradores = new ArrayList<>();
-    
-    public Empresa(DadosCadastroEmpresa dados, Usuario proprietario) {
+    public Empresa(DadosCadastroEmpresa dados) {
         this.nome = dados.nome();
-        this.proprietario = proprietario;
     }
     
     public void atualizarInformacao(@Valid DadosAlterarEmpresa dados) {
