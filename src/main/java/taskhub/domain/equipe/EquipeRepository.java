@@ -28,6 +28,6 @@ public interface EquipeRepository extends JpaRepository<Equipe, Long> {
     @Query("DELETE FROM Equipe e WHERE e.id = :idEquipe")
     void deletarEquipeIdEquipe(Long idEquipe);
 
-    @Query("SELECT e FROM Equipe e WHERE e.usuario.id = :id")
-    Equipe buscarEquipeIdUsuario(Long id);
+    @Query("SELECT e FROM Equipe e WHERE e.usuario.id = :idUsuario AND e.projeto.id = :idProjeto")
+    Equipe buscarEquipeIdUsuarioIdProjeto(Long idUsuario, Long idProjeto);
 }
