@@ -70,7 +70,7 @@ public class ProjetoController {
         validador.validarPost(dados);
         var projeto = new Projeto(dados);
         repository.save(projeto);
-        equipeController.adicionarMembro(new DadosAdicionarUsuario(projeto.getId(), usuario.getId() , true));
+        equipeController.adicionarMembro(request, new DadosAdicionarUsuario(projeto.getId(), usuario.getId() , true));
     }
 
     @PatchMapping
