@@ -14,6 +14,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import taskhub.domain.usuario.Usuario;
+import taskhub.infra.excepetion.ValidacaoExcepetion;
 
 
 @Service
@@ -50,7 +51,7 @@ public class TokenService {
                     .verify(tokenJWT)
                     .getSubject();
         } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token JWT inválido ou expirado!");
+            throw new ValidacaoExcepetion("Token JWT inválido ou expirado!");
         }
     }
 
