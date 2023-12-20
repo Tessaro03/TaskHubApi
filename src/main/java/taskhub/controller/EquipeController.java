@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import taskhub.domain.equipe.DadosAdicionarUsuario;
@@ -24,6 +25,7 @@ import taskhub.domain.equipe.EquipeRepository;
 import taskhub.domain.equipe.validacao.ValidadorEquipe;
 import taskhub.domain.projeto.ProjetoRepository;
 import taskhub.domain.usuario.UsuarioRepository;
+import taskhub.infra.service.BuscarUsuarioToken;
 import taskhub.infra.service.DeleteEntidades;
 
 @RestController
@@ -40,10 +42,13 @@ public class EquipeController {
     private ProjetoRepository projetoRepository;
 
     @Autowired
-    private List<ValidadorEquipe> validador;
+    private ValidadorEquipe validador;
 
     @Autowired
     private DeleteEntidades deleteEntidades;
+
+    @Autowired
+    private BuscarUsuarioToken usuarioToken;
 
     @GetMapping("/{id}")
     @Transactional
@@ -53,8 +58,9 @@ public class EquipeController {
     }
     
     @PostMapping
-    public void adicionarMembro(@RequestBody @Valid DadosAdicionarUsuario dados){
-        validador.forEach( v -> v.validar(dados));
+    public void adicionarMembro(HttpServletRequest request, @RequestBody @Valid DadosAdicionarUsuario dados){
+        var usuarioRequest = usuarioToken.usuarioToken(request);
+        validador.validarPost(dados, usuarioRequest);
         var usuario = usuarioRepository.getReferenceById(dados.idUsuario());
         var projeto = projetoRepository.getReferenceById(dados.idProjeto());
         var equipe = new Equipe(dados ,usuario, projeto);
@@ -63,7 +69,9 @@ public class EquipeController {
 
     @PatchMapping
     @Transactional
-    public ResponseEntity alterarAdmin(@RequestBody @Valid DadosAlterarAdminEquipe dados){
+    public ResponseEntity alterarAdmin(HttpServletRequest request,@RequestBody @Valid DadosAlterarAdminEquipe dados){
+
+        validador.validadorEquipePatch(dados, usuarioToken.usuarioToken(request));
         var equipe = repository.getReferenceById(dados.idEquipe());
         equipe.alterarAdmin(dados);
         return ResponseEntity.ok(new DadosListagemUsuarioEquipe(equipe));
@@ -71,7 +79,9 @@ public class EquipeController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deletar(@PathVariable Long id){
+    public ResponseEntity deletar(HttpServletRequest request,@PathVariable Long id){
+        var usuarioRequest = usuarioToken.usuarioToken(request);
+        validador.validarDelete(id, usuarioRequest);
         deleteEntidades.deletarEquipe(id);
         return ResponseEntity.noContent().build();
     }
