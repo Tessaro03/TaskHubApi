@@ -1,6 +1,5 @@
 package taskhub.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -22,13 +23,13 @@ import taskhub.domain.membro.DadosListagemMembro;
 import taskhub.domain.membro.Membro;
 import taskhub.domain.membro.MembroRepository;
 import taskhub.domain.membro.validacao.ValidadorMembro;
-import taskhub.domain.membro.validacao.validacaoPost.ValidadorMembroPost;
 import taskhub.domain.tarefa.TarefaRepository;
 import taskhub.domain.usuario.UsuarioRepository;
 import taskhub.infra.service.BuscarUsuarioToken;
 
 @RestController
 @RequestMapping("/membros")
+@SecurityRequirement(name = "bearer-key")
 public class MembroController {
     
     @Autowired
@@ -54,6 +55,7 @@ public class MembroController {
     }
 
     @PostMapping
+    @Operation(summary = "Designar Tarefa para Usuário", description = "Disponivel somente para usuário administrador <strong> (Projeto e Tarefa) </strong>.")
     public void criar(HttpServletRequest request, @Valid @RequestBody DadosCriacaoMembro dados){
         validador.validarPost(dados , usuarioToken.usuarioToken(request));
         var usuario = usuarioRepository.getReferenceById(dados.idUsuario());
@@ -64,6 +66,7 @@ public class MembroController {
 
     @PatchMapping
     @Transactional
+    @Operation(summary = "Definir administrador tarefa", description = "Disponivel somente para usuário administrador <strong> (Projeto e Tarefa) </strong>.")
     public ResponseEntity alterarAdmin(@Valid @RequestBody DadosAlterarAdminMembro dados){
         var membro = repository.getReferenceById(dados.idMembro());
         membro.alterarAdmin(dados);
@@ -74,6 +77,7 @@ public class MembroController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @Operation(summary = "Deletar usuario tarefa", description = "Disponivel somente para usuário administrador <strong> (Projeto e Tarefa) </strong> e o próprio Usuário.")
     public ResponseEntity deletar(HttpServletRequest request, @PathVariable Long id){
         validador.validarDelete(id,usuarioToken.usuarioToken(request));
         repository.deletarMembro(id);

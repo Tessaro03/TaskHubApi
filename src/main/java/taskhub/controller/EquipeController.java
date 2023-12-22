@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -30,6 +32,7 @@ import taskhub.infra.service.DeleteEntidades;
 
 @RestController
 @RequestMapping("/equipes")
+@SecurityRequirement(name = "bearer-key")
 public class EquipeController {
 
     @Autowired
@@ -58,6 +61,7 @@ public class EquipeController {
     }
     
     @PostMapping
+    @Operation(summary = "Adicionar usuário a projeto")
     public void adicionarMembro(HttpServletRequest request, @RequestBody @Valid DadosAdicionarUsuario dados){
         var usuarioRequest = usuarioToken.usuarioToken(request);
         validador.validarPost(dados, usuarioRequest);
@@ -69,6 +73,8 @@ public class EquipeController {
 
     @PatchMapping
     @Transactional
+    @Operation(summary = "Definir Administrador", description = "Definir como administrador ou remover cargo de administrador <br> Somente disponivel para Administrador <strong> (Projeto) <strong>")
+
     public ResponseEntity alterarAdmin(HttpServletRequest request,@RequestBody @Valid DadosAlterarAdminEquipe dados){
 
         validador.validadorEquipePatch(dados, usuarioToken.usuarioToken(request));
@@ -79,6 +85,7 @@ public class EquipeController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @Operation(summary = "Remover usuario da Equipe", description = "Somente disponivel para Administrador <strong> (Projeto) <strong>")
     public ResponseEntity deletar(HttpServletRequest request,@PathVariable Long id){
         var usuarioRequest = usuarioToken.usuarioToken(request);
         validador.validarDelete(id, usuarioRequest);

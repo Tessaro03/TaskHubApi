@@ -1,8 +1,5 @@
 package taskhub.controller;
 
-import java.util.List;
-
-import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -30,6 +29,7 @@ import taskhub.infra.service.DeleteEntidades;
 
 @RestController
 @RequestMapping("/projetos")
+@SecurityRequirement(name = "bearer-key")
 public class ProjetoController {
 
     @Autowired
@@ -48,8 +48,9 @@ public class ProjetoController {
     @Autowired
     private BuscarUsuarioToken usuarioToken;
 
-    @GetMapping
+    @GetMapping 
     @Transactional
+    @Operation(summary = "Obter projetos do usuário", description = "Obter projetos do usuário, apenas projetos em que o usuário faz parte da equipe.")
     public ResponseEntity buscarProjetos(HttpServletRequest request){
         var usuario = usuarioToken.usuarioToken(request);
         var projetos = repository.buscarProjetosUsario(usuario.getId());
@@ -58,6 +59,7 @@ public class ProjetoController {
     
     @GetMapping("/{id}")
     @Transactional
+    @Operation(summary = "Obter projeto do usuário através do id do projeto", description = "Obter projeto do usuário através da id do projeto, apenas projeto em que o usuário faz parte da equipe.")
     public ResponseEntity buscarProjeto(HttpServletRequest request, @PathVariable Long id){
         var usuario = usuarioToken.usuarioToken(request);
         var projeto = repository.buscarProjetoUsario(usuario.getId(),id);
@@ -65,6 +67,7 @@ public class ProjetoController {
     }
 
     @PostMapping
+    @Operation(summary = "Criação de Projeto")
     public void criar(HttpServletRequest request,@RequestBody @Valid DadosCriacaoProjeto dados){
         var usuario = usuarioToken.usuarioToken(request);
         validador.validarPost(dados);
@@ -75,6 +78,7 @@ public class ProjetoController {
 
     @PatchMapping
     @Transactional
+    @Operation(summary = "Alteração de informações do projeto", description = "Apenas administrador do projeto.")
     public ResponseEntity alterar(HttpServletRequest request, @RequestBody @Valid DadosAlterarProjeto dados){
         validador.validarPatch( usuarioToken.usuarioToken(request), dados);
         var projeto = repository.getReferenceById(dados.id());
@@ -85,6 +89,7 @@ public class ProjetoController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @Operation(summary = "Deletar projeto", description = "Apenas administrador do projeto.")
     public ResponseEntity deletar(HttpServletRequest request, @PathVariable Long id){
         validador.validarDelete(usuarioToken.usuarioToken(request), id);
         deleteEntidades.deletarProjeto(id);
