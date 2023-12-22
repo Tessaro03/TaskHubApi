@@ -30,4 +30,10 @@ public interface MembroRepository extends JpaRepository<Membro, Long> {
 
     @Query("SELECT m FROM Membro m WHERE m.usuario.id = :idUsuario AND m.tarefa.id = :idTarefa ")
     Membro buscarMembroIdUsuarioIdTarefa(Long idUsuario, Long idTarefa);
+
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Membro m WHERE m.id = :id")
+    void deletarMembro(Long id);
 }
