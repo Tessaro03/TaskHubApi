@@ -20,10 +20,10 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long>{
     @Query("DELETE FROM Tarefa t WHERE t.id = :idTarefa")
     void deletarTarefaIdTarefa(Long idTarefa);
  
-    @Query("SELECT t FROM Tarefa t JOIN t.equipe e WHEERE e.usuario.id = :usuarioId ")
+    @Query("SELECT t FROM Tarefa t JOIN t.membros m WHERE m.usuario.id = :usuarioId ")
     List<Tarefa> buscarTarefasUsuario(Long usuarioId);
 
-    @Query("SELECT t FROM Tarefa t JOIN t.equipe e WHEERE e.usuario.id = :idUsuario AND t.id = :idTarefa")
+    @Query("SELECT t FROM Tarefa t JOIN t.membros m WHERE m.usuario.id = :idUsuario AND t.id = :idTarefa")
     Tarefa buscarTarefaIdUsuarioId(Long idUsuario, Long idTarefa);
     
 }
