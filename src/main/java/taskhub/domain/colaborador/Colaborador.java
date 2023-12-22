@@ -51,4 +51,12 @@ public class Colaborador {
         }
         this.cargo = dados.cargo();
     }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
+    public void setCargo(String cargo){
+        this.cargo = cargo;
+    }
 }
