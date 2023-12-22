@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import taskhub.domain.membro.DadosAlterarAdminMembro;
@@ -21,8 +22,10 @@ import taskhub.domain.membro.DadosListagemMembro;
 import taskhub.domain.membro.Membro;
 import taskhub.domain.membro.MembroRepository;
 import taskhub.domain.membro.validacao.ValidadorMembro;
+import taskhub.domain.membro.validacao.validacaoPost.ValidadorMembroPost;
 import taskhub.domain.tarefa.TarefaRepository;
 import taskhub.domain.usuario.UsuarioRepository;
+import taskhub.infra.service.BuscarUsuarioToken;
 
 @RestController
 @RequestMapping("/membros")
@@ -38,7 +41,10 @@ public class MembroController {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private List<ValidadorMembro> validador;
+    private ValidadorMembro validador;
+
+    @Autowired
+    private BuscarUsuarioToken usuarioToken;
 
     @GetMapping
     @Transactional
@@ -48,8 +54,8 @@ public class MembroController {
     }
 
     @PostMapping
-    public void criar(@Valid @RequestBody DadosCriacaoMembro dados){
-        validador.forEach(v -> v.validar(dados));
+    public void criar(HttpServletRequest request, @Valid @RequestBody DadosCriacaoMembro dados){
+        validador.validarPost(dados , usuarioToken.usuarioToken(request));
         var usuario = usuarioRepository.getReferenceById(dados.idUsuario());
         var tarefa = tarefaRepository.getReferenceById(dados.idTarefa());
         var membro = new Membro(dados, usuario, tarefa);
@@ -68,8 +74,9 @@ public class MembroController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deletar(@PathVariable Long id){
-        repository.deleteById(id);
+    public ResponseEntity deletar(HttpServletRequest request, @PathVariable Long id){
+        validador.validarDelete(id,usuarioToken.usuarioToken(request));
+        repository.deletarMembro(id);
         return ResponseEntity.noContent().build();
     }
 }
