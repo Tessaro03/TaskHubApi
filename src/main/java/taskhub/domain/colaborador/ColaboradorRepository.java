@@ -21,4 +21,7 @@ public interface ColaboradorRepository extends JpaRepository<Colaborador, Long>{
      
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Colaborador c WHERE c.usuario.id = :id")
     Boolean buscarUsuario(Long id);
+
+    @Query("SELECT c FROM Colaborador c WHERE c.usuario.id = :id")
+    Colaborador BuscarColaboradorIdUsuario(Long id);
 }
