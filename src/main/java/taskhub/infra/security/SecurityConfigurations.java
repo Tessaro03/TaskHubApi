@@ -32,7 +32,10 @@ public class SecurityConfigurations {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     RequestMatcher matcher = new AntPathRequestMatcher("/login", HttpMethod.POST.name());
+                    RequestMatcher matcher2 = new AntPathRequestMatcher("/usuarios", HttpMethod.POST.name());
                     req.requestMatchers(matcher).permitAll();
+                    req.requestMatchers(matcher2).permitAll();  
+                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
