@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import taskhub.domain.usuario.DadosAutenticacao;
 import taskhub.domain.usuario.Usuario;
@@ -26,6 +27,7 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
+    @Operation(summary = "Efetuar Login", description = "Sera gerado um token após login, para utilização de outros metodos")
     public ResponseEntity efeturaLogin(@RequestBody @Valid DadosAutenticacao dados){
         var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var authentication = manager.authenticate(token);
