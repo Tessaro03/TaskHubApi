@@ -35,7 +35,7 @@ public class SecurityConfigurations {
                     RequestMatcher matcher2 = new AntPathRequestMatcher("/usuarios", HttpMethod.POST.name());
                     req.requestMatchers(matcher).permitAll();
                     req.requestMatchers(matcher2).permitAll();  
-                    req.requestMatchers("/v3/api-docs/**", "https://taskhubapi-production.up.railway.app/swagger-ui.html", "/swagger-ui/**").permitAll();
+                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "https://taskhubapi-production.up.railway.app/swagger-ui.html").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
