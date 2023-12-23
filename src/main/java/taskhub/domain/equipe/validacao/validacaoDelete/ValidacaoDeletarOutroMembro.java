@@ -3,7 +3,6 @@ package taskhub.domain.equipe.validacao.validacaoDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.var;
 import taskhub.domain.equipe.EquipeRepository;
 import taskhub.domain.usuario.Usuario;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
