@@ -1,4 +1,4 @@
-package taskhub.domain.equipe;
+package taskhub.repository;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
+import taskhub.domain.equipe.Equipe;
 
 public interface EquipeRepository extends JpaRepository<Equipe, Long> {
 
@@ -30,4 +32,7 @@ public interface EquipeRepository extends JpaRepository<Equipe, Long> {
 
     @Query("SELECT e FROM Equipe e WHERE e.usuario.id = :idUsuario AND e.projeto.id = :idProjeto")
     Equipe buscarEquipeIdUsuarioIdProjeto(Long idUsuario, Long idProjeto);
+
+    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM Equipe e WHERE e.projeto.id = :idProjeto")
+    Boolean existeEquipePorIdProjeto(Long idProjeto);
 }

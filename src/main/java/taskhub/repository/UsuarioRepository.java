@@ -1,9 +1,11 @@
-package taskhub.domain.usuario;
+package taskhub.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import taskhub.domain.usuario.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
     

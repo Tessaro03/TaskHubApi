@@ -3,10 +3,10 @@ package taskhub.domain.membro.validacao.validacaoPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import taskhub.domain.equipe.EquipeRepository;
 import taskhub.domain.membro.DadosCriacaoMembro;
-import taskhub.domain.tarefa.TarefaRepository;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.EquipeRepository;
+import taskhub.repository.TarefaRepository;
 
 @Service
 public class ValidacaoUsuarioEquipe implements ValidadorMembroPost{

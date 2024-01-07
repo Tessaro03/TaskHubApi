@@ -18,15 +18,15 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import taskhub.domain.projeto.ProjetoRepository;
 import taskhub.domain.tarefa.DadosAlterarTarefa;
 import taskhub.domain.tarefa.DadosCriacaoTarefa;
 import taskhub.domain.tarefa.DadosListagemTarefa;
 import taskhub.domain.tarefa.Tarefa;
-import taskhub.domain.tarefa.TarefaRepository;
 import taskhub.domain.tarefa.validacao.ValidadorTarefa;
 import taskhub.infra.service.BuscarUsuarioToken;
 import taskhub.infra.service.DeleteEntidades;
+import taskhub.repository.ProjetoRepository;
+import taskhub.repository.TarefaRepository;
 
 @RestController
 @RequestMapping("/tarefas")

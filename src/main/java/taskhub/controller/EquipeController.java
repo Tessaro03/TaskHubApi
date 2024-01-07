@@ -1,6 +1,5 @@
 package taskhub.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +23,12 @@ import taskhub.domain.equipe.DadosAlterarAdminEquipe;
 import taskhub.domain.equipe.DadosListagemEquipe;
 import taskhub.domain.equipe.DadosListagemUsuarioEquipe;
 import taskhub.domain.equipe.Equipe;
-import taskhub.domain.equipe.EquipeRepository;
 import taskhub.domain.equipe.validacao.ValidadorEquipe;
-import taskhub.domain.projeto.ProjetoRepository;
-import taskhub.domain.usuario.UsuarioRepository;
 import taskhub.infra.service.BuscarUsuarioToken;
 import taskhub.infra.service.DeleteEntidades;
+import taskhub.repository.EquipeRepository;
+import taskhub.repository.ProjetoRepository;
+import taskhub.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/equipes")
@@ -76,7 +75,6 @@ public class EquipeController {
     @PatchMapping
     @Transactional
     @Operation(summary = "Definir Administrador", description = "Definir como administrador ou remover cargo de administrador <br> Somente disponivel para Administrador <strong> (Projeto) <strong>")
-
     public ResponseEntity alterarAdmin(HttpServletRequest request,@RequestBody @Valid DadosAlterarAdminEquipe dados){
 
         validador.validadorEquipePatch(dados, usuarioToken.usuarioToken(request));

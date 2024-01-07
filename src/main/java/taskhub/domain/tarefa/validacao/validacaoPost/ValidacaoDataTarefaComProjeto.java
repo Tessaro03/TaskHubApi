@@ -3,9 +3,9 @@ package taskhub.domain.tarefa.validacao.validacaoPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import taskhub.domain.projeto.ProjetoRepository;
 import taskhub.domain.tarefa.DadosCriacaoTarefa;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.ProjetoRepository;
 
 @Service
 public class ValidacaoDataTarefaComProjeto implements ValidadorTarefaPost{
@@ -16,7 +16,6 @@ public class ValidacaoDataTarefaComProjeto implements ValidadorTarefaPost{
     @Override
     public void validar(DadosCriacaoTarefa dados) {
         var projeto = projetoRepository.getReferenceById(dados.idProjeto());
-
 
         // Verifica se a data de início da tarefa é antes da data de início do projeto
         if (dados.dataInicio().isBefore(projeto.getDataInicio())) {

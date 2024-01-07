@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import taskhub.domain.projeto.DadosAlterarProjeto;
-import taskhub.domain.projeto.ProjetoRepository;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.ProjetoRepository;
 
 @Service
 public class ValidacaoDataProjetoAlteracao implements ValidadorProjetoPatch{

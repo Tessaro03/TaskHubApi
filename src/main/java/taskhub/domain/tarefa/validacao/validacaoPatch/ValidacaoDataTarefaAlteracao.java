@@ -3,10 +3,10 @@ package taskhub.domain.tarefa.validacao.validacaoPatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import taskhub.domain.projeto.ProjetoRepository;
 import taskhub.domain.tarefa.DadosAlterarTarefa;
-import taskhub.domain.tarefa.TarefaRepository;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.ProjetoRepository;
+import taskhub.repository.TarefaRepository;
 
 @Service
 public class ValidacaoDataTarefaAlteracao implements ValidadorTarefaPatch {

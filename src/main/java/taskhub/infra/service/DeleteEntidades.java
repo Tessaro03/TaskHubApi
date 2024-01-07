@@ -3,10 +3,10 @@ package taskhub.infra.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import taskhub.domain.equipe.EquipeRepository;
-import taskhub.domain.membro.MembroRepository;
-import taskhub.domain.projeto.ProjetoRepository;
-import taskhub.domain.tarefa.TarefaRepository;
+import taskhub.repository.EquipeRepository;
+import taskhub.repository.MembroRepository;
+import taskhub.repository.ProjetoRepository;
+import taskhub.repository.TarefaRepository;
 
 @Service
 public class DeleteEntidades {

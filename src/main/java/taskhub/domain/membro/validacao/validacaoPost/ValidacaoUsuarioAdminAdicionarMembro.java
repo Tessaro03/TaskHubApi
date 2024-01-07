@@ -3,12 +3,12 @@ package taskhub.domain.membro.validacao.validacaoPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import taskhub.domain.equipe.EquipeRepository;
 import taskhub.domain.membro.DadosCriacaoMembro;
-import taskhub.domain.membro.MembroRepository;
-import taskhub.domain.tarefa.TarefaRepository;
 import taskhub.domain.usuario.Usuario;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.EquipeRepository;
+import taskhub.repository.MembroRepository;
+import taskhub.repository.TarefaRepository;
 
 @Service
 public class ValidacaoUsuarioAdminAdicionarMembro implements ValidadorMembroPostUsuario {
@@ -19,15 +19,13 @@ public class ValidacaoUsuarioAdminAdicionarMembro implements ValidadorMembroPost
     @Autowired
     private EquipeRepository equipeRepository;
 
-    @Autowired TarefaRepository tarefaRepository;
+    @Autowired 
+    private TarefaRepository tarefaRepository;
 
     @Override
     public void validar(Usuario usuario, DadosCriacaoMembro dados) {
         var tarefa = tarefaRepository.getReferenceById( dados.idTarefa());
         var usuarioMembroExiste = membroRepository.buscarUsuarioEmGrupo(usuario.getId(), dados.idTarefa());
-
-        System.out.println(usuario.getId());
-        System.out.println(tarefa.getProjeto().getId());
         var usuarioEquipe = equipeRepository.buscarEquipeIdUsuarioIdProjeto(usuario.getId(), tarefa.getProjeto().getId());
 
         if (usuarioMembroExiste) {
@@ -36,7 +34,7 @@ public class ValidacaoUsuarioAdminAdicionarMembro implements ValidadorMembroPost
                 throw new ValidacaoExcepetion("Usuario não tem permissão");
             }
         }
-        if (!usuarioEquipe.getAdmin()) {
+        else if (!usuarioEquipe.getAdmin()) {
             throw new ValidacaoExcepetion("Usuario não tem permissão");
         }
     }

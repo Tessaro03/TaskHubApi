@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import taskhub.domain.colaborador.ColaboradorRepository;
 import taskhub.domain.empresa.DadosAlterarEmpresa;
 import taskhub.domain.empresa.DadosCadastroEmpresa;
 import taskhub.domain.empresa.DadosListagemEmpresa;
 import taskhub.domain.empresa.Empresa;
-import taskhub.domain.empresa.EmpresaRepository;
 import taskhub.domain.empresa.validacaoEmpresa.ValidadorEmpresa;
 import taskhub.infra.service.BuscarUsuarioToken;
+import taskhub.repository.ColaboradorRepository;
+import taskhub.repository.EmpresaRepository;
 
 @RestController
 @RequestMapping("/empresas")

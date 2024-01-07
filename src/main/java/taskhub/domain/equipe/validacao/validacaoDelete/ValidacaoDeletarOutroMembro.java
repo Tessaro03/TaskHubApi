@@ -3,9 +3,9 @@ package taskhub.domain.equipe.validacao.validacaoDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import taskhub.domain.equipe.EquipeRepository;
 import taskhub.domain.usuario.Usuario;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.EquipeRepository;
 
 @Service
 public class ValidacaoDeletarOutroMembro implements ValidadorEquipeDelete{

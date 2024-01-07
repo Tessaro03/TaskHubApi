@@ -12,7 +12,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import taskhub.domain.usuario.UsuarioRepository;
+import taskhub.repository.UsuarioRepository;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {

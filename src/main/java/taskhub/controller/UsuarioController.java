@@ -23,9 +23,9 @@ import taskhub.domain.usuario.DadosAlterarUsuario;
 import taskhub.domain.usuario.DadosCadastroUsuario;
 import taskhub.domain.usuario.DadosListagemUsuario;
 import taskhub.domain.usuario.Usuario;
-import taskhub.domain.usuario.UsuarioRepository;
 import taskhub.domain.usuario.validacao.ValidadorUsuario;
 import taskhub.infra.service.BuscarUsuarioToken;
+import taskhub.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/usuarios")

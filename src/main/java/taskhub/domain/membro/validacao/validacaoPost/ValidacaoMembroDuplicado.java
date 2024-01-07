@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import taskhub.domain.membro.DadosCriacaoMembro;
-import taskhub.domain.membro.MembroRepository;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.MembroRepository;
 
 @Service
 public class ValidacaoMembroDuplicado implements ValidadorMembroPost {

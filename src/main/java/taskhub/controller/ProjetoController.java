@@ -23,10 +23,10 @@ import taskhub.domain.projeto.DadosAlterarProjeto;
 import taskhub.domain.projeto.DadosCriacaoProjeto;
 import taskhub.domain.projeto.DadosListagemProjeto;
 import taskhub.domain.projeto.Projeto;
-import taskhub.domain.projeto.ProjetoRepository;
 import taskhub.domain.projeto.validacao.ValidadorProjeto;
 import taskhub.infra.service.BuscarUsuarioToken;
 import taskhub.infra.service.DeleteEntidades;
+import taskhub.repository.ProjetoRepository;
 
 @RestController
 @RequestMapping("/projetos")

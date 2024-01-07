@@ -1,4 +1,4 @@
-package taskhub.domain.tarefa;
+package taskhub.repository;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import jakarta.transaction.Transactional;
+import taskhub.domain.tarefa.Tarefa;
 
 public interface TarefaRepository extends JpaRepository<Tarefa, Long>{
 

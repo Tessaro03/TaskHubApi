@@ -22,11 +22,11 @@ import taskhub.domain.membro.DadosAlterarAdminMembro;
 import taskhub.domain.membro.DadosCriacaoMembro;
 import taskhub.domain.membro.DadosListagemMembro;
 import taskhub.domain.membro.Membro;
-import taskhub.domain.membro.MembroRepository;
 import taskhub.domain.membro.validacao.ValidadorMembro;
-import taskhub.domain.tarefa.TarefaRepository;
-import taskhub.domain.usuario.UsuarioRepository;
 import taskhub.infra.service.BuscarUsuarioToken;
+import taskhub.repository.MembroRepository;
+import taskhub.repository.TarefaRepository;
+import taskhub.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/membros")

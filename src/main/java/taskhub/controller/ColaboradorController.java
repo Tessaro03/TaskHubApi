@@ -20,14 +20,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import taskhub.domain.colaborador.Colaborador;
-import taskhub.domain.colaborador.ColaboradorRepository;
 import taskhub.domain.colaborador.DadosAlterarColaborador;
 import taskhub.domain.colaborador.DadosCriacaoColaborador;
 import taskhub.domain.colaborador.DadosListagemColaborador;
 import taskhub.domain.colaborador.validacao.ValidadorColaborador;
-import taskhub.domain.empresa.EmpresaRepository;
-import taskhub.domain.usuario.UsuarioRepository;
 import taskhub.infra.service.BuscarUsuarioToken;
+import taskhub.repository.ColaboradorRepository;
+import taskhub.repository.EmpresaRepository;
+import taskhub.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/colaboradores")

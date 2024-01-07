@@ -3,12 +3,12 @@ package taskhub.domain.tarefa.validacao.validacaoPatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import taskhub.domain.equipe.EquipeRepository;
-import taskhub.domain.membro.MembroRepository;
 import taskhub.domain.tarefa.DadosAlterarTarefa;
-import taskhub.domain.tarefa.TarefaRepository;
 import taskhub.domain.usuario.Usuario;
 import taskhub.infra.excepetion.ValidacaoExcepetion;
+import taskhub.repository.EquipeRepository;
+import taskhub.repository.MembroRepository;
+import taskhub.repository.TarefaRepository;
 
 @Service
 public class ValidacaoUsuarioAdminTarefa implements ValidadorTarefaPatchUsuario{
@@ -28,6 +28,7 @@ public class ValidacaoUsuarioAdminTarefa implements ValidadorTarefaPatchUsuario{
         var usuarioMembroExiste = membroRepository.buscarUsuarioEmGrupo(usuario.getId(), dados.id());
         var tarefa = tarefaRepository.getReferenceById(dados.id());
         var usuarioEquipe = equipeRepository.buscarEquipeIdUsuarioIdProjeto(usuario.getId(), tarefa.getProjeto().getId());
+        
         if (!usuarioMembroExiste && !usuarioEquipe.getAdmin()) {
             throw new ValidacaoExcepetion("Usuario não tem permissão");
         }
