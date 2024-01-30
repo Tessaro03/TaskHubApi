@@ -6,3 +6,4 @@ public interface ValidadorColaboradorPost {
     
     void validar(DadosCriacaoColaborador dados);
 }
+

@@ -25,7 +25,7 @@ public class ValidadorColaborador {
     private List<ValidadorColaboradorPatch> validadorPatch;
 
     public void validarPost(DadosCriacaoColaborador dados){
-        validadorPost.forEach( v -> v.validar(dados));;
+        validadorPost.forEach( v -> v.validar(dados));
     }
 
     public void validarDelete(Long id, Usuario usuario) {
