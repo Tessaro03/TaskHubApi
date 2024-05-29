@@ -18,16 +18,3 @@ A **TaskHub API** representa uma solução robusta e flexível desenvolvida em J
 
 - **Segurança Avançada:** Utilizando o módulo Security do Spring, a API incorpora medidas robustas de autenticação e autorização, garantindo que apenas usuários autorizados tenham acesso às funcionalidades específicas.
 
-## Arquitetura Sólida
-
-Desenvolvida seguindo as melhores práticas de arquitetura de software, a TaskHub API é altamente escalável e modular, permitindo futuras expansões e integrações sem comprometer a estabilidade do sistema.
-
-## Contribua para o Sucesso
-
-Acreditamos na colaboração para o aprimoramento contínuo. Seja parte da comunidade de desenvolvedores, contribua com feedback, sugestões, ou até mesmo novas funcionalidades. Juntos, podemos fazer da TaskHub API uma ferramenta ainda mais poderosa.
-
-## Desenvolva com Confiança
-
-A TaskHub API é o resultado de esforços dedicados para criar uma solução confiável e eficiente. Desenvolvedores podem contar com uma documentação abrangente e clara, além de uma estrutura bem definida para construir sobre ela.
-
-Explore, inove, e faça da TaskHub API a escolha ideal para suas necessidades de gerenciamento de projetos. Estamos comprometidos em evoluir constantemente para atender às demandas dinâmicas do desenvolvimento de software moderno.
