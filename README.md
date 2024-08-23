@@ -18,3 +18,4 @@ A **TaskHub API** representa uma solução robusta e flexível desenvolvida em J
 
 - **Segurança Avançada:** Utilizando o módulo Security do Spring, a API incorpora medidas robustas de autenticação e autorização, garantindo que apenas usuários autorizados tenham acesso às funcionalidades específicas.
 
+- **Testes Automatizados:** Para garantir a qualidade e confiabilidade da API, foram utilizados **JUnit** e **Mockito** na criação de testes unitários.
